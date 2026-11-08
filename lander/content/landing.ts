@@ -209,6 +209,7 @@ export const copy = {
   footer: {
     tagline: "Save at your pace.",
     botLabel: "Telegram bot",
+    privacyLabel: "Privacy",
     githubLabel: "GitHub",
     comingSoon: ["Devpost (coming soon)", "Demo video (coming soon)"],
     smallPrint:

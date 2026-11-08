@@ -40,6 +40,14 @@ export function Footer() {
                 {footer.githubLabel}
               </a>
             </li>
+            <li>
+              <a
+                href="/privacy"
+                className="footer-link inline-flex min-h-11 items-center"
+              >
+                {footer.privacyLabel}
+              </a>
+            </li>
             {footer.comingSoon.map((label) => (
               <li key={label} className="py-1 text-dark-muted">
                 <span>{label}</span>
