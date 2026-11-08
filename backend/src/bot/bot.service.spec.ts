@@ -234,6 +234,29 @@ describe('BotService conversation completion (task 3)', () => {
     expect(reply.text).toContain('personal Solana wallet');
   });
 
+  it('offers Naira/Dollars buttons on the currency step and saves a tap', async () => {
+    const { wallets, bot } = setup();
+    const start = await bot.handleStart(USER);
+    expect(start.currencyKeyboard).toBe(true);
+    const reply = await bot.handleCurrencyChoice(USER, 'USD');
+    expect(wallets.getSettings(USER).displayCurrency).toBe('USD');
+    expect(reply.text).toContain('US dollars');
+    expect(reply.text).toContain('personal Solana wallet');
+    // the step is closed: a later typed amount is no longer a currency answer
+    const start2 = await bot.handleStart(USER);
+    expect(start2.currencyKeyboard).toBe(true);
+    const tapped = await bot.handleCurrencyChoice(USER, 'NGN');
+    expect(wallets.getSettings(USER).displayCurrency).toBe('NGN');
+    expect(tapped.currencyKeyboard).toBeUndefined();
+  });
+
+  it('keeps the buttons when a currency answer is not understood', async () => {
+    const { bot } = setup();
+    await bot.handleStart(USER);
+    const reply = await bot.handleText(USER, 'YEN');
+    expect(reply.currencyKeyboard).toBe(true);
+  });
+
   it('saves USD when the user picks dollars', async () => {
     const { wallets, bot } = setup();
     await bot.handleStart(USER);
