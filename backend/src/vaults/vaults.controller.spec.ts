@@ -4,6 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { VaultsController } from './vaults.controller';
 import type { VaultsService } from './vaults.service';
 import type { WalletsService } from '../wallets/wallets.service';
@@ -170,6 +171,25 @@ describe('VaultsController holdings auth', () => {
         vault: null,
         recentBuys: [],
       });
+    });
+
+    it('logs the holdings request without ever logging initData', async () => {
+      const log = jest
+        .spyOn(Logger.prototype, 'log')
+        .mockImplementation(() => undefined);
+      try {
+        const initData = initDataFor(424242);
+        await controller(null).myHoldings(initData);
+        expect(log).toHaveBeenCalledWith(
+          expect.stringContaining('GET /vaults/me/holdings'),
+        );
+        const lines = log.mock.calls.flat().join('\n');
+        expect(lines).toContain('user=424242');
+        expect(lines).not.toContain(initData);
+        expect(lines).not.toContain('hash');
+      } finally {
+        log.mockRestore();
+      }
     });
 
     it('serves a short cache: a second call within the TTL returns the same result', async () => {

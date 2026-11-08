@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   Get,
   Headers,
+  Logger,
   NotFoundException,
   Optional,
   Param,
@@ -22,6 +23,7 @@ export const HOLDINGS_CACHE_TTL_MS = 5_000;
 
 @Controller('vaults')
 export class VaultsController {
+  private readonly logger = new Logger(VaultsController.name);
   private readonly holdingsCache = new Map<
     string,
     { expiresAt: number; value: unknown }
@@ -57,16 +59,33 @@ export class VaultsController {
   @UseGuards(ThrottlerGuard)
   @Throttle({ default: { limit: 30, ttl: 60_000 } })
   async myHoldings(@Headers('x-telegram-init-data') initData?: string) {
-    const userId = this.verifiedUser(initData);
-    const cached = this.holdingsCache.get(userId);
-    if (cached && cached.expiresAt > Date.now())
-      return cached.value as Awaited<ReturnType<VaultsController['computeHoldings']>>;
-    const result = await this.computeHoldings(userId);
-    this.holdingsCache.set(userId, {
-      expiresAt: Date.now() + HOLDINGS_CACHE_TTL_MS,
-      value: result,
-    });
-    return result;
+    const startedAt = Date.now();
+    // Request log: user id and timings only — never the initData itself.
+    let userId = 'unknown';
+    try {
+      userId = this.verifiedUser(initData);
+      const cached = this.holdingsCache.get(userId);
+      if (cached && cached.expiresAt > Date.now()) {
+        this.logger.log(
+          `GET /vaults/me/holdings user=${userId} cache=hit durationMs=${Date.now() - startedAt}`,
+        );
+        return cached.value as Awaited<ReturnType<VaultsController['computeHoldings']>>;
+      }
+      const result = await this.computeHoldings(userId);
+      this.holdingsCache.set(userId, {
+        expiresAt: Date.now() + HOLDINGS_CACHE_TTL_MS,
+        value: result,
+      });
+      this.logger.log(
+        `GET /vaults/me/holdings user=${userId} cache=miss holdings=${result.holdings.length} durationMs=${Date.now() - startedAt}`,
+      );
+      return result;
+    } catch (err) {
+      this.logger.warn(
+        `GET /vaults/me/holdings user=${userId} error=${(err as Error).name} durationMs=${Date.now() - startedAt}`,
+      );
+      throw err;
+    }
   }
 
   private async computeHoldings(userId: string) {
