@@ -36,7 +36,7 @@ to that file, so a change to either fails loudly.
 
 ## Rules the tests enforce
 
-- Every "Start" link goes to `https://t.me/pacerfinancebot`; the demo video links to YouTube, and Devpost is still plain coming-soon text.
+- Every "Start" link goes to `https://t.me/pacerfinancebot`; the demo video links to YouTube.
 - No colour outside `tokens.css` (and the share image), and every text pair meets WCAG AA.
 - "advice" and "recommendation" appear once, in the FAQ answer that says Pacer gives no financial advice.
 - Every past figure sits next to "Past performance. Not a prediction or a promise."

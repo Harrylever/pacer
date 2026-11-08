@@ -21,10 +21,9 @@ test("faq opens smoothly only where the browser supports it", () => {
   expect(css).toMatch(/details::details-content/);
 });
 
-test("footer: coming-soon items are not links, the demo video is", () => {
+test("footer: the demo video is a link and there is no Devpost item", () => {
   const out = html(<Footer />);
-  expect(out).not.toMatch(/<a[^>]*>[^<]*Devpost/);
-  expect(out).toContain("Devpost (coming soon)");
+  expect(out).not.toContain("Devpost");
   expect(out).toContain('href="https://youtu.be/RJH9i2106_U"');
   // Demo video sits in the link list under Telegram bot and GitHub.
   const order = [

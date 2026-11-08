@@ -213,7 +213,6 @@ export const copy = {
     privacyLabel: "Privacy",
     githubLabel: "GitHub",
     demoLabel: "Demo video",
-    comingSoon: ["Devpost (coming soon)"],
     smallPrint:
       "Built for the MLH Solana Hackathon, November 2026. The demo runs on Solana devnet. Not available to US users. Figures shown are past performance, not a prediction or a promise.",
   },

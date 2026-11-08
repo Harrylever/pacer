@@ -52,7 +52,6 @@ test("shapes later tasks rely on", () => {
   expect(copy.safety.guarantees.map((g) => g.id)).toEqual(["out", "pace", "buy"]);
   expect(copy.faq).toHaveLength(6);
   expect(copy.tickers.items.map((t) => t.symbol)).toEqual(["AAPLx", "NVDAx", "SPYx"]);
-  expect(copy.footer.comingSoon).toEqual(["Devpost (coming soon)"]);
 });
 
 test("the AI agent is named where judges look, without hype", () => {
