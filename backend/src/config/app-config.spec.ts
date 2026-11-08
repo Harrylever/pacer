@@ -1,4 +1,4 @@
-import { loadConfig } from './app-config';
+import { buildRpcUrl, loadConfig, redactRpcUrl } from './app-config';
 import { Keypair } from '@solana/web3.js';
 
 const secret = () => JSON.stringify(Array.from(Keypair.generate().secretKey));
@@ -36,6 +36,26 @@ describe('loadConfig', () => {
     });
     expect(cfg.periodSeconds).toBe(86400);
     expect(cfg.minTradeMicroUsdc).toBe(1_000_000n);
+  });
+
+  it('builds a keyed Helius RPC URL, explicit URL first, key never logged', () => {
+    expect(buildRpcUrl({})).toBe('https://api.devnet.solana.com');
+    expect(buildRpcUrl({ HELIUS_API_KEY: 'k123' })).toBe(
+      'https://devnet.helius-rpc.com/?api-key=k123',
+    );
+    expect(
+      buildRpcUrl({ HELIUS_API_KEY: 'k123', SOLANA_CLUSTER: 'mainnet-beta' }),
+    ).toBe('https://mainnet.helius-rpc.com/?api-key=k123');
+    expect(
+      buildRpcUrl({
+        HELIUS_API_KEY: 'k123',
+        SOLANA_RPC_URL: 'https://rpc.example.com',
+      }),
+    ).toBe('https://rpc.example.com');
+    expect(redactRpcUrl('https://devnet.helius-rpc.com/?api-key=k123')).toBe(
+      'https://devnet.helius-rpc.com/?api-key=***',
+    );
+    expect(redactRpcUrl('https://devnet.helius-rpc.com/?api-key=k123')).not.toContain('k123');
   });
 
   it('refuses the same key for two roles (keeper must not be the oracle)', () => {

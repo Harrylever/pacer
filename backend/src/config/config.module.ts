@@ -1,5 +1,5 @@
 import { Global, Logger, Module } from '@nestjs/common';
-import { loadConfig, type AppConfig } from './app-config';
+import { buildRpcUrl, loadConfig, type AppConfig } from './app-config';
 
 export const APP_CONFIG = 'APP_CONFIG';
 
@@ -32,9 +32,7 @@ export const APP_CONFIG = 'APP_CONFIG';
             maxPriceAgeSecs: 600,
             demoRepublish: process.env.DEMO_REPUBLISH === 'true',
             cluster: process.env.SOLANA_CLUSTER ?? 'devnet',
-            rpcUrl:
-              process.env.SOLANA_RPC_URL ??
-              'https://api.devnet.solana.com',
+            rpcUrl: buildRpcUrl(process.env),
           };
         }
       },
