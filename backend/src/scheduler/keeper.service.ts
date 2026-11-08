@@ -111,7 +111,7 @@ export class KeeperService {
             if (!this.alerted.has(key)) {
               this.alerted.add(key);
               this.logger.error(
-                `keeper unexpected program error: ${err.errorName}`,
+                `keeper unexpected program error: ${err.errorName}: ${err.message}`,
               );
             }
           } else {

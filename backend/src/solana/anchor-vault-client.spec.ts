@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { BN } from '@anchor-lang/core';
 import {
   Keypair,
@@ -354,6 +355,33 @@ describe('AnchorVaultClient (mocked connection)', () => {
     await expect(
       client.deposit({ owner: owner.publicKey.toBase58(), amount: 1n }),
     ).rejects.toMatchObject({ errorName: 'StalePrice' });
+  });
+
+  it('logs the real message behind an UnknownProgramError', async () => {
+    const { client, connection, owner } = setup();
+    const warn = jest
+      .spyOn(Logger.prototype, 'warn')
+      .mockImplementation(() => undefined);
+    try {
+      connection.simError = {
+        err: new Error('weird chain explosion 12345'),
+        logs: ['Program log: something odd happened'],
+      };
+      await expect(
+        client.deposit({ owner: owner.publicKey.toBase58(), amount: 1n }),
+      ).rejects.toMatchObject({
+        errorName: 'UnknownProgramError',
+        message: 'weird chain explosion 12345',
+      });
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('weird chain explosion 12345'),
+      );
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('something odd happened'),
+      );
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it('no keeper path can reach withdraw: the keeper key never signs one', async () => {

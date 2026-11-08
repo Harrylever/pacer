@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import {
   AnchorProvider,
   BN,
@@ -127,6 +128,7 @@ const toBig = (v: unknown): bigint => BigInt(String(v));
  * is no keeper-signed withdraw path anywhere in this class.
  */
 export class AnchorVaultClient implements VaultClient {
+  private readonly logger = new Logger(AnchorVaultClient.name);
   private readonly connection: Connection;
   private readonly keeper: Keypair;
   private readonly oracle: Keypair;
@@ -320,10 +322,14 @@ export class AnchorVaultClient implements VaultClient {
         .errors?.find((e) => e.code === code);
       if (byCode) return this.namedError(byCode.name);
     }
-    return new VaultProgramError(
-      'UnknownProgramError',
-      err instanceof Error ? err.message : text.slice(0, 300),
+    const realMessage =
+      err instanceof Error ? err.message : text.slice(0, 300);
+    // Never let an unmapped rejection collapse to just the label: the
+    // underlying message and program logs are the only clue on devnet.
+    this.logger.warn(
+      `UnknownProgramError: ${realMessage}${logs.length ? ` | logs: ${logs.join(' | ').slice(0, 500)}` : ''}`,
     );
+    return new VaultProgramError('UnknownProgramError', realMessage);
   }
 
   private async sendIx(
