@@ -1,0 +1,212 @@
+/*
+ * Base elements for the Mini App ground. Colours come only from
+ * tokens.css (imported before this file in layout.tsx); no hex here.
+ * The ground itself is .ground-paper / .ground-dark from tokens.css,
+ * applied to <html> by useTelegram. Before JS runs — and outside
+ * Telegram — the element selectors below follow the system scheme;
+ * the ground classes (class specificity) win once applied.
+ */
+html {
+  --bg: var(--surface);
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --focus: var(--primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --bg: var(--primary-deep);
+    --fg: var(--dark-ink);
+    --fg-muted: var(--dark-muted);
+    --focus: var(--mint);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-schibsted), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1,
+h2 {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 480;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: var(--font-plex-mono), monospace;
+}
+
+button {
+  font: inherit;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--divider);
+  background: var(--surface-raised);
+  color: var(--fg);
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.ground-dark button {
+  background: var(--dark-raised);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--primary);
+}
+
+.ground-dark a {
+  color: var(--mint);
+}
+
+/* Segmented currency control (M2): pill track, 44px targets, sliding thumb. */
+.segmented {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--divider);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 2px;
+}
+.segmented-thumb {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  border-radius: 999px;
+  background: var(--primary);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.segmented-thumb[data-active='USD'] {
+  transform: translateX(100%);
+}
+.ground-dark .segmented-thumb {
+  background: var(--mint);
+}
+.segmented button {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: transparent;
+  min-width: 76px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: color 240ms ease;
+}
+.segmented button[aria-pressed='true'] {
+  background: transparent;
+  color: var(--on-primary);
+}
+.ground-dark .segmented button[aria-pressed='true'] {
+  background: transparent;
+  color: var(--primary-deep);
+}
+
+.card {
+  border: 1px solid var(--divider);
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--surface-raised);
+}
+
+.ground-dark .card {
+  background: var(--dark-raised);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Chart series colours (M3): brand tokens only, mint/accent on dark. */
+.chart-line-naira { stroke: var(--ink-muted); }
+.chart-line-usdc { stroke: var(--primary); }
+.chart-line-sp500 { stroke: var(--accent-ink); }
+.chart-fill-naira { fill: var(--ink-muted); }
+.chart-fill-usdc { fill: var(--primary); }
+.chart-fill-sp500 { fill: var(--accent-ink); }
+.chart-swatch-naira { background: var(--ink-muted); }
+.chart-swatch-usdc { background: var(--primary); }
+.chart-swatch-sp500 { background: var(--accent-ink); }
+.chart-dot { stroke: var(--surface-raised); }
+.ground-dark .chart-line-usdc { stroke: var(--mint); }
+.ground-dark .chart-line-sp500 { stroke: var(--accent); }
+.ground-dark .chart-fill-usdc { fill: var(--mint); }
+.ground-dark .chart-fill-sp500 { fill: var(--accent); }
+.ground-dark .chart-swatch-usdc { background: var(--mint); }
+.ground-dark .chart-swatch-sp500 { background: var(--accent); }
+.ground-dark .chart-dot { stroke: var(--dark-raised); }
+
+.drop-loss { color: var(--loss); }
+.ground-dark .drop-loss { color: var(--dark-loss); }
+.gain-text { color: var(--gain); }
+.ground-dark .gain-text { color: var(--dark-gain); }
+.loss-text { color: var(--loss); }
+.ground-dark .loss-text { color: var(--dark-loss); }
+
+@keyframes pacer-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: pacer-fade-in 240ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/*
+ * Hairlines on the dark ground. --divider is the paper hairline; on the
+ * green-black ground it read as bright white lines. The lander uses a
+ * faint ink line there, so redefine the token for the dark ground.
+ */
+.ground-dark {
+  --divider: color-mix(in srgb, var(--dark-ink) 16%, transparent);
+}

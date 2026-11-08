@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Telegram ID → wallet/vault mapping. The money itself lives on-chain.
+model User {
+  telegramId        String         @id
+  ownerPublicKey    String         @unique
+  /// AES-256-GCM encrypted owner secret key (iv:tag:ciphertext, hex). Demo custody only.
+  ownerSecretEnc    String?
+  withdrawalAddress String?
+  displayCurrency   String         @default("NGN")
+  notifyBuys        Boolean        @default(false)
+  summaryCadence    String         @default("weekly")
+  createdAt         DateTime       @default(now())
+  vault             VaultRecord?
+  sweeps            DepositSweep[]
+}
+
+model VaultRecord {
+  owner         String   @id
+  user          User     @relation(fields: [owner], references: [ownerPublicKey])
+  vaultPda      String?
+  ratePerPeriod String
+  chosenMints   String[]
+  paused        Boolean  @default(false)
+  totalInvested String   @default("0")
+  createdAt     DateTime @default(now())
+}
+
+model DepositSweep {
+  id          Int      @id @default(autoincrement())
+  owner       String
+  user        User     @relation(fields: [owner], references: [ownerPublicKey])
+  amountMicro String
+  signature   String?
+  needsRetry  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+/// One row per keeper buy, for the weekly summary's "this week" figures.
+model BuyRecord {
+  id        Int      @id @default(autoincrement())
+  owner     String
+  mint      String
+  usdcIn    String
+  createdAt DateTime @default(now())
+
+  @@index([owner, createdAt])
+}
+
+model NudgeLog {
+  id         Int      @id @default(autoincrement())
+  telegramId String
+  kind       String
+  sentAt     DateTime @default(now())
+}

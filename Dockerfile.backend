@@ -1,0 +1,18 @@
+# Pacer backend image. Built from the repo root so data/history/ (read by
+# HistoryService at ../../../data/history from dist/) ships with the app.
+FROM node:22-slim AS build
+RUN npm install -g bun@1 && apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app/backend
+COPY backend/package.json backend/bun.lock ./
+RUN bun install --frozen-lockfile
+COPY backend/ ./
+RUN bun run build
+
+FROM node:22-slim
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+ENV NODE_ENV=production
+WORKDIR /app
+COPY data/history ./data/history
+COPY --from=build /app/backend ./backend
+WORKDIR /app/backend
+CMD ["node", "dist/main"]

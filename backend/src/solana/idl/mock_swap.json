@@ -1,0 +1,186 @@
+{
+  "address": "E3fu6bCTnhotjprKFa5kaCgF1avv3n7J1nuB9iPrUFgY",
+  "metadata": {
+    "name": "mock_swap",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Pacer: mock_swap"
+  },
+  "instructions": [
+    {
+      "name": "swap",
+      "docs": [
+        "Swap `usdc_in` USDC for stand-in stock at the oracle price."
+      ],
+      "discriminator": [
+        248,
+        198,
+        158,
+        145,
+        225,
+        117,
+        135,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "user_authority",
+          "docs": [
+            "The party paying USDC. In practice the vault PDA, signing through a CPI."
+          ],
+          "signer": true
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "stock_mint",
+          "docs": [
+            "The stand-in stock mint; this program's PDA must be its mint authority."
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_usdc",
+          "writable": true
+        },
+        {
+          "name": "user_stock",
+          "writable": true
+        },
+        {
+          "name": "treasury_usdc",
+          "docs": [
+            "Fixed to this program's own associated token account, so a caller cannot redirect the USDC."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "mock_authority"
+              },
+              {
+                "kind": "account",
+                "path": "usdc_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "usdc_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "mock_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  111,
+                  99,
+                  107,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "price"
+        },
+        {
+          "name": "usdc_token_program"
+        },
+        {
+          "name": "stock_token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "usdc_in",
+          "type": "u64"
+        },
+        {
+          "name": "min_out",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "WrongPriceAccount",
+      "msg": "Price account is not pacer_vault's price account for this mint"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidPrice",
+      "msg": "Price is zero"
+    },
+    {
+      "code": 6002,
+      "name": "ZeroOutput",
+      "msg": "Swap output is zero"
+    },
+    {
+      "code": 6003,
+      "name": "SlippageExceeded",
+      "msg": "Output is below min_out"
+    },
+    {
+      "code": 6004,
+      "name": "MathOverflow",
+      "msg": "Arithmetic overflow"
+    }
+  ]
+}

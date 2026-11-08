@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "assets": [
+      { "include": "solana/idl/*.json", "outDir": "dist" },
+      { "include": "solana/deployments/*.json", "outDir": "dist" }
+    ]
+  }
+}

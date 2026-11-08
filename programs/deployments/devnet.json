@@ -1,0 +1,57 @@
+{
+  "cluster": "devnet",
+  "programs": {
+    "pacer_vault": "Bj6PUUzuupGFKhLdDpVEakW4NQp3z9VXjSmekmx1yHC4",
+    "mock_swap": "E3fu6bCTnhotjprKFa5kaCgF1avv3n7J1nuB9iPrUFgY"
+  },
+  "config": "874f7x9SLytBSQ992AoaDR4zVnhcJiguVfhBr8CvX8iF",
+  "mockAuthority": "8FeMx5BMve6ghCqUSZdvWL5YCAqekMdQKaZ6o6a1C9VN",
+  "treasuryUsdc": "GBHyFofyfZQxwML3Vw1FDZDRKsGECsU91t3mXnSdVE1r",
+  "admin": "9nvYfSq7kS2UJATeC81rckix6XpMeVMSU2Mia7zSnmGu",
+  "keeper": "9SV7Vm1qLdVqHzc8Y7HDasbbJD2rdvdj4SALPJfuiJ8s",
+  "oracleAuthority": "5X3J1xwrqNopLK1mgHDsF3NenRRxGNrZkhZET71GG2cE",
+  "gas": "FBWYWmT6QQKcP31fgCqdYEXRo1FVerc51v4HL1ZghR3T",
+  "issuer": "287Vyz6awApEJC4uZcowAgFBMcmVtJVxRMA7mGNiZv6m",
+  "usdc": {
+    "symbol": "USDC-dev",
+    "mint": "4tsZ3TPVDHoaqvuzQvvwVp5yM2aNGTftEo3Hpteu6ZMN",
+    "decimals": 6,
+    "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "mintAuthority": "FBWYWmT6QQKcP31fgCqdYEXRo1FVerc51v4HL1ZghR3T"
+  },
+  "stocks": [
+    {
+      "symbol": "AAPLx-dev",
+      "mint": "E7wjvbCA2Nkybck3TX8UWHRikMEfEtdDmRnRDjce58rB",
+      "price": "HRrGQscZ73bYUNquK2dFpoypoWXcXBn1fEiYRwN4vMX4",
+      "decimals": 8,
+      "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "scaledUiMultiplier": 1.003
+    },
+    {
+      "symbol": "NVDAx-dev",
+      "mint": "9NVPUdetoqkQfhWKJnoAm1LoxdRadL2KQ8eqbbZMqztC",
+      "price": "DujtHsSVLmk6kaRkbJ9SGGpQAmXbQRzWxxDKwR3TndG4",
+      "decimals": 8,
+      "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "scaledUiMultiplier": 1.003
+    },
+    {
+      "symbol": "SPYx-dev",
+      "mint": "HwjCBrhRkjfifM7aQ4eP4vj7h9mQsVELXjDxmdv5nk6M",
+      "price": "ExkQABWPqrfp1L96QVWFowXQotMx2jwLrfwp17N2Uxh8",
+      "decimals": 8,
+      "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "scaledUiMultiplier": 1.003
+    }
+  ],
+  "params": {
+    "periodSeconds": 10,
+    "minTrade": "100000",
+    "maxRatePerPeriod": "50000000",
+    "maxSlippageBps": 100,
+    "maxPriceAgeSecs": 600,
+    "maxWithdrawDelaySecs": 604800,
+    "withdrawWindowSecs": 86400
+  }
+}

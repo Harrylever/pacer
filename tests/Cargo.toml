@@ -1,0 +1,25 @@
+[package]
+name = "tests"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.97.1"
+
+[dependencies]
+anchor-lang = { version = "=1.2.2" }
+anchor-spl = { version = "=1.2.2" }
+pacer_vault = { path = "../programs/pacer_vault", features = ["no-entrypoint"] }
+mock_swap = { path = "../programs/mock_swap", features = ["no-entrypoint"] }
+litesvm = "=0.18.2"
+solana-keypair = "3"
+solana-signer = "3"
+solana-transaction = "4"
+solana-message = "4"
+solana-clock = "3"
+solana-system-interface = { version = "3", features = ["bincode"] }
+spl-token-interface = "2"
+spl-token-2022-interface = "=2.1.0"
+spl-associated-token-account-interface = "2"
+
+# Own workspace and lockfile: LiteSVM pulls a large Agave dependency tree that must
+# not leak into the programs' lockfile (the on-chain build uses an older rustc).
+[workspace]

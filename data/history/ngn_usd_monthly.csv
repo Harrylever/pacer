@@ -1,0 +1,62 @@
+month,ngn_per_usd,parallel_date,parallel_ngn_per_usd,official_cbn_date,official_cbn_ngn_per_usd,parallel_premium_pct,parallel_source,parallel_note
+2021-10,565.00,2021-10-29,565.00,2021-10-29,410.5900,37.6,https://nairametrics.com/2021/11/02/naira-gains-at-official-fx-market-as-foreign-records-first-decline-in-over-2-months/,Friday close cited in 1 Nov report
+2021-11,560.00,2021-11-29,560.00,2021-11-30,410.6600,36.4,https://nairametrics.com/2021/11/29/naira-remains-stable-at-official-market-as-dollar-supply-surges-by-120/,
+2021-12,565.00,2021-12-31,565.00,2021-12-31,412.9900,36.8,https://nairametrics.com/2021/12/31/official-nafex-exchange-rate-closes-at-n435-1-in-2021/,
+2022-01,568.00,2022-01-31,568.00,2022-01-31,415.2600,36.8,https://nairametrics.com/2022/01/31/naira-gains-at-p2p-and-official-markets-as-fx-turnover-drops-to-two-week-low/,
+2022-02,573.00,2022-02-25,573.00,2022-02-28,416.0900,37.7,https://nairametrics.com/2022/02/28/dollar-supply-improves-at-ie-window-as-fx-turnover-jumps-to-134-million/,Friday close
+2022-03,588.00,2022-03-31,588.00,2022-03-30,415.7500,41.4,https://nairametrics.com/2022/03/31/exchange-rate-remains-stable-as-foreign-reserve-records-fourth-daily-gain/,
+2022-04,587.00,2022-04-25,587.00,2022-04-29,415.1900,41.4,https://nairametrics.com/2022/04/26/naira-rebounds-at-ie-window-as-fx-turnover-improves-significantly-to-291-million/,
+2022-05,609.00,2022-05-26,609.00,2022-05-31,415.1500,46.7,https://nairametrics.com/2022/05/27/cbns-foreign-reserve-plunges-further-as-exchange-rate-weakens-across-fx-markets/,
+2022-06,612.00,2022-07-01,612.00,2022-06-30,414.7200,47.6,https://nairametrics.com/2023/01/12/daily-exchange-rate-between-naira-and-dollar-2022/,nearest quote after month-end
+2022-07,718.00,2022-07-29,718.00,2022-07-29,415.6800,72.7,https://nairametrics.com/2022/07/29/exchange-rate-falls-further-to-n718-1-at-black-market/,
+2022-08,705.00,2022-08-30,705.00,2022-08-31,423.4800,66.5,https://nairametrics.com/2022/08/30/again-naira-falls-to-n705-at-black-market/,
+2022-09,735.00,2022-09-30,735.00,2022-09-29,432.3700,70.0,https://nairametrics.com/2023/01/12/daily-exchange-rate-between-naira-and-dollar-2022/,
+2022-10,795.00,2022-10-31,795.00,2022-10-31,438.5200,81.3,https://nairametrics.com/2023/01/12/daily-exchange-rate-between-naira-and-dollar-2022/,cited as prior close in 1 Nov report
+2022-11,767.00,2022-11-30,767.00,2022-11-30,443.5840,72.9,https://nairametrics.com/2023/01/12/daily-exchange-rate-between-naira-and-dollar-2022/,
+2022-12,736.00,2022-12-30,736.00,2022-12-30,448.5500,64.1,https://nairametrics.com/2023/01/12/daily-exchange-rate-between-naira-and-dollar-2022/,
+2023-01,754.00,2023-01-31,754.00,2023-01-31,461.0000,63.6,https://investorsking.com/2023/01/31/black-market-dollar-to-naira-exchange-rate-for-today-31st-january-2023/,
+2023-02,762.00,2023-02-22,762.00,2023-02-28,460.4700,65.5,https://nairametrics.com/2023/02/23/fx-traders-lament-cash-scarcity-mobile-app-disruptions-as-business-is-put-to-a-halt/,cash scarcity period
+2023-03,745.00,2023-03-31,745.00,2023-03-31,460.3500,61.8,https://investorsking.com/2023/03/31/dollar-to-naira-exchange-rate-today-march-31-2023/amp,selling rate
+2023-04,739.00,2023-04-28,739.00,2023-04-28,460.3100,60.5,https://www.legit.ng/business-economy/economy/1529945-naira-appreciates-massively-n737-black-market-slow-dollar-demand,month close per Legit.ng
+2023-05,780.00,2023-05-26,780.00,2023-05-31,461.2600,69.1,https://nairametrics.com/2023/05/27/exchange-rate-sells-for-n632-1-at-nafex-official-market/,
+2023-06,770.00,2023-06-30,770.00,2023-06-30,770.3800,-0.0,https://nairametrics.com/2023/06/30/currency-update-official-exchange-rate-strengthens-to-n462-13-1-on-april-26th/,
+2023-07,870.00,2023-07-31,870.00,2023-07-31,757.5220,14.8,https://nairametrics.com/2023/08/01/end-of-july-exchange-rate-parallel-market-depreciates-by-11-5-gains-1-6-on-ie-window/,end-of-July average
+2023-08,925.00,2023-08-30,925.00,2023-08-31,757.0230,22.2,https://nairametrics.com/2023/08/30/naira-falls-despite-a-weak-dollar/,
+2023-09,990.00,2023-09-25,990.00,2023-09-29,768.7600,28.8,https://nairametrics.com/2023/09/25/cardoso-starts-first-monday-with-exchange-rate-at-n1000-n1/,
+2023-10,1180.00,2023-10-31,1180.00,2023-10-31,824.9940,43.0,https://nairametrics.com/2023/10/31/exchange-rate-appreciates-to-n815-32-1-at-the-official-market,
+2023-11,1160.00,2023-11-28,1160.00,2023-11-30,942.1170,23.1,https://nairametrics.com/2023/11/29/naira-drags-lower-despite-u-s-dollar-index-hitting-a-three-month-low/,
+2023-12,1233.00,2023-12-26,1233.00,2023-12-29,899.3930,37.1,https://nairametrics.com/2023/12/26/naira-trade-at-n1233-in-black-market-despite-u-s-dollar-index-at-5-month-low/,
+2024-01,1410.00,2024-01-25,1410.00,2024-01-31,1356.8830,3.9,https://nairametrics.com/2024/01/25/naira-further-weakens-as-official-rate-slides-to-n900-96-against-dollar/,
+2024-02,1610.00,2024-02-28,1610.00,2024-02-29,1544.0810,4.3,https://nairametrics.com/2024/03/01/u-s-dollar-set-for-first-weekly-fall-in-2024-while-naira-shows-momentum/,very volatile month (peak ~1900 mid-Feb)
+2024-03,1250.00,2024-04-02,1250.00,2024-03-28,1330.2600,-6.0,https://nairametrics.com/2024/04/02/official-exchange-rate-strengthens-below-n1300-1-for-the-first-time-since-january/,approximate
+2024-04,1380.00,2024-04-29,1380.00,2024-04-30,1329.7050,3.8,https://nairametrics.com/2024/04/29/exchange-rate-opens-week-at-n1380-at-parallel-market/,
+2024-05,1500.00,2024-05-24,1500.00,2024-05-31,1482.9820,1.1,https://nairametrics.com/2024/05/25/naira-holds-n1500-line-amid-efcc-clampdown-on-street-trading/,
+2024-06,1500.00,2024-06-28,1500.00,2024-06-28,1470.1910,2.0,https://allafrica.com/stories/202408090599.html,Vanguard via AllAfrica
+2024-07,1595.00,2024-07-31,1595.00,2024-07-31,1611.2100,-1.0,https://allafrica.com/stories/202408090599.html,Vanguard via AllAfrica
+2024-08,1610.00,2024-08-26,1610.00,2024-08-30,1596.1400,0.9,https://nairametrics.com/2024/08/27/naira-loses-grip-as-dollar-shows-strength/,
+2024-09,1700.00,2024-09-30,1700.00,2024-09-30,1601.0280,6.2,https://nairametrics.com/2024/10/01/naira-ends-september-at-lowest-exchange-rate-in-seven-months-at-parallel-market/,
+2024-10,1730.00,2024-10-25,1730.00,2024-10-31,1669.9700,3.6,https://nairametrics.com/2024/10/26/naira-shows-mixed-performance-depreciates-to-n1730-in-parallel-market-gains-3-03-in-official-market/,
+2024-11,1750.00,2024-11-28,1750.00,2024-11-29,1663.3960,5.2,https://nairametrics.com/2024/11/28/daily-average-forex-turnover-on-fmdq-hits-year-high-294-million-in-november/,average
+2024-12,1650.00,2024-12-23,1650.00,2024-12-31,1535.3176,7.5,https://nairametrics.com/2024/12/24/naira-shows-mild-strength-ahead-of-christmas-holidays/,
+2025-01,1610.00,2025-01-31,1610.00,2025-01-31,1477.7200,9.0,https://nairametrics.com/2025/01/31/exchange-rate-appreciates-to-n1610-1-in-parallel-market/,
+2025-02,1490.00,2025-02-26,1490.00,2025-02-28,1491.9910,-0.1,https://businessday.ng/?p=956924,BusinessDay
+2025-03,1550.00,2025-03-28,1550.00,2025-03-28,1536.3158,0.9,https://businessday.ng/?p=956924,BusinessDay
+2025-04,1610.00,2025-04-29,1610.00,2025-04-30,1596.1891,0.9,https://nairametrics.com/2025/04/30/naira-weakens-further-hits-n1602-1-at-official-market/,"high quote, Abuja"
+2025-05,1630.00,2025-05-30,1630.00,2025-05-30,1585.6524,2.8,https://nairametrics.com/2025/06/01/exchange-rate-plunges-as-naira-closes-may-at-n1630-1-in-parallel-market-after-brief-stability/,
+2025-06,1600.00,2025-06-25,1600.00,2025-06-30,1529.2105,4.6,https://nairametrics.com/2025/06/25/forex-volatility-bdc-operators-reveal-over-90-of-dollar-liquidity-is-off-the-books/,approximate
+2025-07,1535.00,2025-07-29,1535.00,2025-07-31,1533.0540,0.1,https://nairametrics.com/2025/07/30/forex-traders-cite-excess-dollar-supply-security-enforcement-as-reasons-for-massive-naira-gains/,
+2025-08,1545.00,2025-08-29,1545.00,2025-08-29,1531.0703,0.9,https://nairametrics.com/2025/08/30/naira-closes-august-with-slight-gain-against-dollar-in-nigerian-forex-market/,
+2025-09,1520.00,2025-09-26,1520.00,2025-09-30,1474.8473,3.1,https://nairametrics.com/2025/09/27/naira-strengthens-to-n1480-1-best-performance-in-nine-months/,
+2025-10,1490.00,2025-10-24,1490.00,2025-10-31,1421.2343,4.8,https://nairametrics.com/2025/10/24/naira-strengthens-to-n1455-as-foreign-reserves-hit-42-8-billion/,weekly range 1487-1492
+2025-11,1470.00,2025-11-28,1470.00,2025-11-28,1446.2421,1.6,https://nairametrics.com/2025/11/28/naira-settles-at-n1470-at-unofficial-market-u-s-dollar-index-turns-green/,
+2025-12,1470.00,2025-12-31,1470.00,2025-12-31,1435.2571,2.4,https://allafrica.com/stories/202601020193.html,Vanguard via AllAfrica
+2026-01,1453.00,2026-01-30,1453.00,2026-01-30,1386.0532,4.8,https://nairametrics.com/2026/01/31/naira-gains-week-on-week-to-n1391-as-external-reserves-rise/,
+2026-02,1358.00,2026-02-23,1358.00,2026-02-27,1362.8954,-0.4,https://nairametrics.com/2026/02/24/naira-weakens-to-n1353-5-ahead-of-304th-mpc-meeting/,
+2026-03,1405.00,2026-03-23,1405.00,2026-03-31,1386.2156,1.4,https://leadership.ng/?p=574980,late-March close
+2026-04,1385.00,2026-04-29,1385.00,2026-04-30,1374.4431,0.8,https://arbiterz.com/?p=65284,
+2026-05,1385.00,2026-05-29,1385.00,2026-05-29,1372.7545,0.9,https://businessday.ng/news/article/naira-cools-fx-deals-shrink-in-may-as-reserve-surge-masks-slower-dollar-flows/,
+2026-06,1400.00,2026-06-29,1400.00,2026-06-30,1379.1842,1.5,https://allafrica.com/stories/202606290316.html,average selling rate
+2026-07,1410.00,2026-07-28,1410.00,2026-07-31,1367.7232,3.1,https://www.thecityceleb.com/business/aboki-naira-to-dollar-black-market-exchange-rate-today-28th-july-2026/,selling rate
+2026-08,1403.00,2026-08-28,1403.00,2026-08-31,1332.4396,5.3,https://nairametrics.com/2026/08/29/naira-strengthens-to-n1337-as-fx-turnover-plunges-49/,
+2026-09,1385.00,2026-09-29,1385.00,2026-09-30,1328.6600,4.2,https://techeconomy.ng/dollar-to-naira-exchange-rate-today-september-29-2026,selling rate
+2026-10,1385.00,2026-10-27,1385.00,2026-10-30,1345.7565,2.9,https://nairametrics.com/2026/10/28/naira-gains-n8-against-dollar-biggest-daily-rise-since-august/,range 1380-1385

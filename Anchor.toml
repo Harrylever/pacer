@@ -1,0 +1,23 @@
+[toolchain]
+anchor_version = "1.2.2"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+mock_swap = "11111111111111111111111111111111"
+pacer_vault = "11111111111111111111111111111111"
+
+[programs.localnet]
+mock_swap = "E3fu6bCTnhotjprKFa5kaCgF1avv3n7J1nuB9iPrUFgY"
+pacer_vault = "Bj6PUUzuupGFKhLdDpVEakW4NQp3z9VXjSmekmx1yHC4"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test --manifest-path tests/Cargo.toml"
+
+[hooks]

@@ -1,0 +1,15 @@
+{
+  "name": "pacer",
+  "private": true,
+  "description": "Pacer: save at your pace. Root holds convenience scripts only; each folder is its own project with its own bun.lock (no workspace).",
+  "scripts": {
+    "backend:install": "cd backend && bun install",
+    "backend:dev": "cd backend && bun run start:dev",
+    "backend:build": "cd backend && bun run build",
+    "backend:test": "cd backend && bun run test",
+    "test": "bun run backend:test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

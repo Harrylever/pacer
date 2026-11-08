@@ -1,0 +1,69 @@
+/* Copied from ../lander/app/tokens.css (Pacer Mini App round 2, M1). */
+/*
+ * Pacer design tokens: the one place colours are defined.
+ * Components reference these variables and never a hex value.
+ *
+ * Type (loaded in layout.tsx with next/font/google):
+ *  - Fraunces: display. The logo is set in it; it is used light, at its
+ *    largest optical size, with tight leading and one italic word.
+ *  - Schibsted Grotesk: body and interface. Legible, slightly newspaper-like,
+ *    a good partner for Fraunces, and not one of the overused defaults.
+ *  - IBM Plex Mono: eyebrows, lane numbers, tickers, axes, "Example" labels.
+ * Figures: tabular numerals in tables, the chart and result rows (.tnum);
+ * normal numerals in running text, where tabular figures leave gaps in
+ * prices such as "$1.05".
+ */
+:root {
+  --surface: #f6f4ee;
+  --surface-raised: #ffffff;
+  --ink: #12201c;
+  --ink-muted: #5c6863;
+  --primary: #0b6b4f;
+  --primary-deep: #0e1513;
+  --mint: #3fcb9b;
+  --on-primary: #ffffff;
+  --accent: #e8a33d;
+  --accent-ink: #9a5b00;
+  --gain: #1a5fd0;
+  --loss: #c2410c;
+  --divider: #e4e0d6;
+  --border-control: #7a837f;
+
+  /* Dark grounds */
+  --dark-ink: #e9efec;
+  --dark-muted: #9aa7a2;
+  --dark-raised: #18221f;
+  --dark-gain: #6cb6ff;
+  --dark-loss: #ff9e64;
+
+  /* Muted text on the deep green band (the grey above fails contrast there) */
+  --band-muted: #cfe3da;
+}
+
+/* Section grounds: each sets the colours its children read. */
+.ground-paper {
+  --bg: var(--surface);
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --focus: var(--primary);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.ground-dark {
+  --bg: var(--primary-deep);
+  --fg: var(--dark-ink);
+  --fg-muted: var(--dark-muted);
+  --focus: var(--mint);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.ground-band {
+  --bg: var(--primary);
+  --fg: var(--dark-ink);
+  --fg-muted: var(--band-muted);
+  --focus: var(--dark-ink);
+  background: var(--bg);
+  color: var(--fg);
+}
