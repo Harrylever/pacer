@@ -10,6 +10,7 @@
         "@nestjs/core": "^12.0.1",
         "@nestjs/platform-express": "^12.0.1",
         "@nestjs/schedule": "^12.0.2",
+        "@nestjs/throttler": "^6.7.1",
         "@prisma/adapter-pg": "^7",
         "@prisma/client": "^7",
         "@solana/spl-token": "^0.4.14",
@@ -250,6 +251,8 @@
     "@nestjs/schematics": ["@nestjs/schematics@12.0.12", "", { "dependencies": { "@angular-devkit/core": "22.2.4", "@angular-devkit/schematics": "22.2.4", "comment-json": "5.0.0", "jsonc-parser": "3.3.1", "pluralize": "8.0.0" }, "peerDependencies": { "prettier": "^3.0.0", "typescript": ">=6.0.0" }, "optionalPeers": ["prettier"] }, "sha512-mZmpt1GuzRe4uwBKh/Men8SR6NeDNwCJ6cXHYiGOvFzl25X5u+7iWb3q/fS7xTbUxPUtu4kp1TgPcu+JJpqSPA=="],
 
     "@nestjs/testing": ["@nestjs/testing@12.3.3", "", { "dependencies": { "tslib": "2.9.1" }, "peerDependencies": { "@nestjs/common": "^12.0.0", "@nestjs/core": "^12.0.0", "@nestjs/microservices": "^12.0.0", "@nestjs/platform-express": "^12.0.0" }, "optionalPeers": ["@nestjs/microservices", "@nestjs/platform-express"] }, "sha512-JSrRkq0gVRaj8JMi7fjDcw7m7XoiPO9RfRi4w+8fRQIm0xkwVJU0BWkhq+4tjQNCQionZBbvzG1WWK3KfebtrA=="],
+
+    "@nestjs/throttler": ["@nestjs/throttler@6.7.1", "", { "peerDependencies": { "@nestjs/common": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "@nestjs/core": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "reflect-metadata": "^0.1.13 || ^0.2.0" } }, "sha512-gAyY1AkU+cSK5DCjFOB43xax9oakameH4xZa9kAgqBqSBQZgmv3DZylLV8KyZNzOGhceL3kDVtby+CF8VAdmEA=="],
 
     "@noble/curves": ["@noble/curves@1.9.7", "", { "dependencies": { "@noble/hashes": "1.8.0" } }, "sha512-gbKGcRUYIjA3/zCCNaWDciTMFI0dCkvou3TL8Zmy5Nc7sJ47a0jtOeZoTaMxkuqRo9cRhjOdZJXegxYE5FN/xw=="],
 

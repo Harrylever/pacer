@@ -129,6 +129,11 @@ const toBig = (v: unknown): bigint => BigInt(String(v));
  */
 export class AnchorVaultClient implements VaultClient {
   private readonly logger = new Logger(AnchorVaultClient.name);
+  /** Mint decimals never change; cache them (multiplier included, TTL-bound). */
+  private readonly mintMetaCache = new Map<
+    string,
+    { expiresAt: number; meta: { decimals: number; multiplier: number } }
+  >();
   private readonly connection: Connection;
   private readonly keeper: Keypair;
   private readonly oracle: Keypair;
@@ -414,6 +419,15 @@ export class AnchorVaultClient implements VaultClient {
   async getMintMeta(
     mintInput: string,
   ): Promise<{ decimals: number; multiplier: number } | null> {
+    const cacheKey = (() => {
+      try {
+        return this.resolveMint(mintInput).toBase58();
+      } catch {
+        return mintInput;
+      }
+    })();
+    const cached = this.mintMetaCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) return cached.meta;
     try {
       const mint = this.resolveMint(mintInput);
       const info = await this.connection.getAccountInfo(mint, 'confirmed');
@@ -428,7 +442,14 @@ export class AnchorVaultClient implements VaultClient {
         const cfg = getScaledUiAmountConfig(parsed);
         if (cfg) multiplier = effectiveMultiplier(cfg, Math.floor(Date.now() / 1000));
       }
-      return { decimals: parsed.decimals, multiplier };
+      const meta = { decimals: parsed.decimals, multiplier };
+      // Decimals are immutable; the 5-minute TTL only bounds how stale a
+      // scheduled ScaledUiAmount multiplier can be. Failures are not cached.
+      this.mintMetaCache.set(cacheKey, {
+        expiresAt: Date.now() + 5 * 60_000,
+        meta,
+      });
+      return meta;
     } catch {
       return null; // unreadable mint: the keeper skips, never guesses
     }

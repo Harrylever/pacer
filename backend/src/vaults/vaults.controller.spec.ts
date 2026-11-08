@@ -172,6 +172,20 @@ describe('VaultsController holdings auth', () => {
       });
     });
 
+    it('serves a short cache: a second call within the TTL returns the same result', async () => {
+      const c = controller({
+        holdings: [],
+        totalUsd: 0,
+        investedUsd: 0,
+        waitingUsdc: 0,
+        paused: false,
+        ratePerPeriod: 1_000_000n,
+      });
+      const first = await c.myHoldings(initDataFor(424242));
+      const second = await c.myHoldings(initDataFor(424242));
+      expect(second).toBe(first);
+    });
+
     it('rejects bad initData and a user with no wallet', async () => {
       await expect(controller().myHoldings('bogus')).rejects.toBeInstanceOf(
         UnauthorizedException,

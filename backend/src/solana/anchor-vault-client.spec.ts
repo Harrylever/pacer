@@ -126,8 +126,11 @@ class MockConnection {
   async getParsedTokenAccountsByOwner() {
     return { value: this.parsedByOwner };
   }
+  mintInfo: unknown = null;
+  accountInfoCalls = 0;
   async getAccountInfo() {
-    return null;
+    this.accountInfoCalls += 1;
+    return this.mintInfo;
   }
 }
 
@@ -355,6 +358,39 @@ describe('AnchorVaultClient (mocked connection)', () => {
     await expect(
       client.deposit({ owner: owner.publicKey.toBase58(), amount: 1n }),
     ).rejects.toMatchObject({ errorName: 'StalePrice' });
+  });
+
+  it('caches mint decimals: the second read does not hit the RPC', async () => {
+    const { MintLayout, TOKEN_PROGRAM_ID } = await import('@solana/spl-token');
+    const { client, connection } = setup();
+    const buf = Buffer.alloc(MintLayout.span);
+    MintLayout.encode(
+      {
+        mintAuthorityOption: 0,
+        mintAuthority: Keypair.generate().publicKey,
+        supply: 0n,
+        decimals: 6,
+        isInitialized: true,
+        freezeAuthorityOption: 0,
+        freezeAuthority: Keypair.generate().publicKey,
+      } as never,
+      buf,
+    );
+    connection.mintInfo = {
+      data: buf,
+      owner: TOKEN_PROGRAM_ID,
+      executable: false,
+      lamports: 1,
+    };
+    await expect(client.getMintMeta('USDC')).resolves.toEqual({
+      decimals: 6,
+      multiplier: 1,
+    });
+    await expect(client.getMintMeta('USDC')).resolves.toEqual({
+      decimals: 6,
+      multiplier: 1,
+    });
+    expect(connection.accountInfoCalls).toBe(1);
   });
 
   it('logs the real message behind an UnknownProgramError', async () => {
