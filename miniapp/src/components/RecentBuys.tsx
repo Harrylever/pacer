@@ -4,7 +4,11 @@ import type { DisplayCurrency, RecentBuy } from '../api';
 import { copy } from '../copy';
 import { formatDisplay, formatRelativeTime } from '../format';
 
-/** Up to five recent buys, newest first (the backend caps the list). Hides when empty. */
+/**
+ * Up to five recent buys, newest first (the backend caps the list). Hides when empty.
+ * Naira amounts convert at `ngnPerUsd` — today's rate from the holdings
+ * summary, never a rate from the day of the buy (buys carry no rate).
+ */
 export function RecentBuys({
   buys,
   currency,

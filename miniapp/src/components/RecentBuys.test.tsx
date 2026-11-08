@@ -50,4 +50,16 @@ describe('RecentBuys', () => {
     render(<RecentBuys buys={buys} currency="NGN" ngnPerUsd={1385} now={NOW} />);
     expect(screen.getByRole('listitem').textContent).toContain('₦1,454 of Apple · 1 min ago');
   });
+
+  it("converts at today's rate, not a buy-day rate", () => {
+    // Same buy, two different current rates: the naira figure must follow
+    // the rate passed in today (1.05 x 1000 vs 1.05 x 2000).
+    const buys: RecentBuy[] = [{ symbol: 'AAPLx', usdcIn: 1.05, at: ago(60_000) }];
+    const { rerender } = render(
+      <RecentBuys buys={buys} currency="NGN" ngnPerUsd={1000} now={NOW} />,
+    );
+    expect(screen.getByRole('listitem').textContent).toContain('₦1,050');
+    rerender(<RecentBuys buys={buys} currency="NGN" ngnPerUsd={2000} now={NOW} />);
+    expect(screen.getByRole('listitem').textContent).toContain('₦2,100');
+  });
 });
