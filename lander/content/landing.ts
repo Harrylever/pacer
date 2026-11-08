@@ -6,6 +6,7 @@
 export const LINKS = {
   bot: "https://t.me/pacerfinancebot",
   github: "https://github.com/Harrylever/pacer",
+  demoVideo: "https://youtu.be/RJH9i2106_U",
 } as const
 
 export const copy = {
@@ -211,7 +212,8 @@ export const copy = {
     botLabel: "Telegram bot",
     privacyLabel: "Privacy",
     githubLabel: "GitHub",
-    comingSoon: ["Devpost (coming soon)", "Demo video (coming soon)"],
+    demoLabel: "Demo video",
+    comingSoon: ["Devpost (coming soon)"],
     smallPrint:
       "Built for the MLH Solana Hackathon, November 2026. The demo runs on Solana devnet. Not available to US users. Figures shown are past performance, not a prediction or a promise.",
   },

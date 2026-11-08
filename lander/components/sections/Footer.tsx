@@ -42,6 +42,16 @@ export function Footer() {
             </li>
             <li>
               <a
+                href={LINKS.demoVideo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link inline-flex min-h-11 items-center"
+              >
+                {footer.demoLabel}
+              </a>
+            </li>
+            <li>
+              <a
                 href="/privacy"
                 className="footer-link inline-flex min-h-11 items-center"
               >
