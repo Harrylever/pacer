@@ -11,6 +11,8 @@ export const copy = {
   nairaRow: 'Kept in naira',
   usdcRow: 'Kept in USDC',
   spRow: 'In the S&P 500',
+  appleRow: 'In Apple',
+  nvidiaRow: 'In Nvidia',
   worstDrop: (pct: number) => `worst drop ${pct.toFixed(1)}%`,
   worstDropLabel: 'Worst drop',
   chartLabel: 'Chart of what ₦20,000 would have become, October 2021 to October 2026. Drag or use the arrow keys to move through the months.',

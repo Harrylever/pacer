@@ -77,6 +77,13 @@ export function Comparison({
   const resultFor = (key: SeriesKey) =>
     key === 'naira' ? data.naira : key === 'usdc' ? data.usdc : data.sp500;
 
+  // Apple and Nvidia have no monthly series (the chart stays three lines),
+  // so their rows show the end value the API returns, with its worst drop.
+  const extraRows = [
+    { key: 'apple', label: copy.appleRow, result: data.apple },
+    { key: 'nvidia', label: copy.nvidiaRow, result: data.nvidia },
+  ].filter((r) => r.result);
+
   return (
     <section aria-label="Past comparison">
       <div
@@ -157,6 +164,26 @@ export function Comparison({
             </li>
           );
         })}
+        {extraRows.map(({ key, label, result }) => (
+          <li key={key} data-testid="asset-row" className="fade-in" style={{ listStyle: 'none', borderTop: '1px solid var(--divider)', padding: '20px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 15, color: 'var(--fg-muted)' }}>
+              {label}
+            </div>
+            <div className="tnum" style={{ marginTop: 4, fontFamily: 'var(--font-fraunces), serif', fontSize: 44, fontWeight: 380, lineHeight: 1, letterSpacing: '-0.02em' }}>
+              <CountUp value={result.endNgn} format={formatValue} />
+            </div>
+            <p style={{ marginTop: 8, fontSize: 14, color: 'var(--fg-muted)' }}>
+              {copy.worstDropLabel}{' '}
+              {result.maxDrawdownPct === 0 ? (
+                <span style={{ fontWeight: 500, color: 'var(--fg)' }}>0%</span>
+              ) : (
+                <span className="drop-loss" style={{ fontWeight: 500 }}>
+                  ▼ −{result.maxDrawdownPct.toFixed(1)}%
+                </span>
+              )}
+            </p>
+          </li>
+        ))}
       </ul>
 
       <p>{data.disclaimer}</p>
