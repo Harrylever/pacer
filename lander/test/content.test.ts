@@ -7,6 +7,7 @@ const all = JSON.stringify(copy);
 test("links", () => {
   expect(LINKS.bot).toBe("https://t.me/pacerfinancebot");
   expect(LINKS.github).toBe("https://github.com/Harrylever/pacer");
+  expect(LINKS.demoVideo).toBe("https://youtu.be/RJH9i2106_U");
 });
 
 test("real figures", () => {
@@ -51,10 +52,7 @@ test("shapes later tasks rely on", () => {
   expect(copy.safety.guarantees.map((g) => g.id)).toEqual(["out", "pace", "buy"]);
   expect(copy.faq).toHaveLength(6);
   expect(copy.tickers.items.map((t) => t.symbol)).toEqual(["AAPLx", "NVDAx", "SPYx"]);
-  expect(copy.footer.comingSoon).toEqual([
-    "Devpost (coming soon)",
-    "Demo video (coming soon)",
-  ]);
+  expect(copy.footer.comingSoon).toEqual(["Devpost (coming soon)"]);
 });
 
 test("the AI agent is named where judges look, without hype", () => {

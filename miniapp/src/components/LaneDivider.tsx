@@ -5,12 +5,11 @@ export function LaneDivider({ className }: { className?: string }) {
     <svg
       viewBox="0 0 1200 48"
       preserveAspectRatio="none"
-      className={className}
       aria-hidden="true"
       focusable="false"
-      style={{ display: 'block', width: '100%', height: 24 }}
+      className={className ? `${className} lane-divider` : 'lane-divider'}
     >
-      <g fill="none" style={{ stroke: 'var(--divider)' }} strokeWidth={1}>
+      <g fill="none" className="lane-lines" strokeWidth={1}>
         {[0, 9, 18].map((dy) => (
           <path key={dy} d={`M0 ${34 + dy} Q600 ${-30 + dy} 1200 ${34 + dy}`} />
         ))}

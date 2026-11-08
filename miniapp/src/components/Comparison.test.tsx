@@ -18,10 +18,22 @@ describe('Comparison', () => {
     expect(screen.getByText('Past performance. Not a prediction or a promise.')).toBeInTheDocument();
   });
 
+  it('shows Apple and Nvidia result rows with their worst drops', () => {
+    render(<Comparison data={data} currency="NGN" ngnPerUsd={1385} />);
+    const rows = screen.getAllByTestId('asset-row');
+    expect(rows.length).toBe(5);
+    expect(within(rows[3]).getByText(/In Apple/)).toBeInTheDocument();
+    expect(within(rows[3]).getByText(/₦115,639/)).toBeInTheDocument();
+    expect(within(rows[3]).getByText(/▼ −26\.3%/)).toBeInTheDocument();
+    expect(within(rows[4]).getByText(/In Nvidia/)).toBeInTheDocument();
+    expect(within(rows[4]).getByText(/₦394,140/)).toBeInTheDocument();
+    expect(within(rows[4]).getByText(/▼ −51\.2%/)).toBeInTheDocument();
+  });
+
   it('shows a worst drop next to every gain, with no arrow on the row that never dropped', () => {
     render(<Comparison data={data} currency="NGN" ngnPerUsd={1385} />);
     const rows = screen.getAllByTestId('asset-row');
-    expect(rows.length).toBe(3);
+    expect(rows.length).toBe(5);
     for (const row of rows) {
       expect(within(row).getByText(/Worst drop/)).toBeInTheDocument();
       expect(within(row).getByText(/\d+\.\d%|0%/)).toBeInTheDocument();

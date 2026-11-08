@@ -8,7 +8,11 @@ import {
   AnchorVaultClient,
   type DeploymentFile,
 } from './anchor-vault-client';
-import { loadSigner, type AppConfig } from '../config/app-config';
+import {
+  loadSigner,
+  redactRpcUrl,
+  type AppConfig,
+} from '../config/app-config';
 import { APP_CONFIG } from '../config/config.module';
 import { WalletsService } from '../wallets/wallets.service';
 import { WalletsModule } from '../wallets/wallets.module';
@@ -50,7 +54,7 @@ export function createVaultClient(
   const gas = loadSigner('gas');
   const deployment = loadDeployment();
   logger.log(
-    `VAULT_CLIENT=anchor; binding the devnet client (${deployment.programs.pacer_vault})`,
+    `VAULT_CLIENT=anchor; binding the devnet client (${deployment.programs.pacer_vault}) via ${redactRpcUrl(config.rpcUrl)}`,
   );
   return new AnchorVaultClient({
     connection: new Connection(config.rpcUrl, 'confirmed'),

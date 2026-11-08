@@ -27,6 +27,29 @@ function parseKeypair(name: string, raw: string | undefined): Keypair {
   }
 }
 
+/**
+ * RPC endpoint: an explicit SOLANA_RPC_URL wins; otherwise a keyed Helius
+ * endpoint when HELIUS_API_KEY is set (the public devnet RPC rate-limits
+ * mid-demo); otherwise the public devnet RPC. Never log the returned URL
+ * when it carries a key — use redactRpcUrl for log lines.
+ */
+export function buildRpcUrl(env: NodeJS.ProcessEnv): string {
+  if (env.SOLANA_RPC_URL) return env.SOLANA_RPC_URL;
+  if (env.HELIUS_API_KEY) {
+    const host =
+      env.SOLANA_CLUSTER === 'mainnet-beta' || env.SOLANA_CLUSTER === 'mainnet'
+        ? 'mainnet.helius-rpc.com'
+        : 'devnet.helius-rpc.com';
+    return `https://${host}/?api-key=${env.HELIUS_API_KEY}`;
+  }
+  return 'https://api.devnet.solana.com';
+}
+
+/** A log-safe RPC URL: any api-key is masked. */
+export function redactRpcUrl(url: string): string {
+  return url.replace(/api-key=[^&]+/i, 'api-key=***');
+}
+
 const signers = new Map<string, Keypair>();
 
 function load(env: NodeJS.ProcessEnv): { config: AppConfig } {
@@ -51,7 +74,7 @@ function load(env: NodeJS.ProcessEnv): { config: AppConfig } {
       maxPriceAgeSecs: Number(env.MAX_PRICE_AGE_SECS ?? 600),
       demoRepublish: env.DEMO_REPUBLISH === 'true',
       cluster: env.SOLANA_CLUSTER ?? 'devnet',
-      rpcUrl: env.SOLANA_RPC_URL ?? 'https://api.devnet.solana.com',
+      rpcUrl: buildRpcUrl(env),
     },
   };
 }

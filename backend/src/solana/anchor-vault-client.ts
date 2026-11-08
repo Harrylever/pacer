@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import {
   AnchorProvider,
   BN,
@@ -127,6 +128,12 @@ const toBig = (v: unknown): bigint => BigInt(String(v));
  * is no keeper-signed withdraw path anywhere in this class.
  */
 export class AnchorVaultClient implements VaultClient {
+  private readonly logger = new Logger(AnchorVaultClient.name);
+  /** Mint decimals never change; cache them (multiplier included, TTL-bound). */
+  private readonly mintMetaCache = new Map<
+    string,
+    { expiresAt: number; meta: { decimals: number; multiplier: number } }
+  >();
   private readonly connection: Connection;
   private readonly keeper: Keypair;
   private readonly oracle: Keypair;
@@ -320,10 +327,14 @@ export class AnchorVaultClient implements VaultClient {
         .errors?.find((e) => e.code === code);
       if (byCode) return this.namedError(byCode.name);
     }
-    return new VaultProgramError(
-      'UnknownProgramError',
-      err instanceof Error ? err.message : text.slice(0, 300),
+    const realMessage =
+      err instanceof Error ? err.message : text.slice(0, 300);
+    // Never let an unmapped rejection collapse to just the label: the
+    // underlying message and program logs are the only clue on devnet.
+    this.logger.warn(
+      `UnknownProgramError: ${realMessage}${logs.length ? ` | logs: ${logs.join(' | ').slice(0, 500)}` : ''}`,
     );
+    return new VaultProgramError('UnknownProgramError', realMessage);
   }
 
   private async sendIx(
@@ -408,6 +419,15 @@ export class AnchorVaultClient implements VaultClient {
   async getMintMeta(
     mintInput: string,
   ): Promise<{ decimals: number; multiplier: number } | null> {
+    const cacheKey = (() => {
+      try {
+        return this.resolveMint(mintInput).toBase58();
+      } catch {
+        return mintInput;
+      }
+    })();
+    const cached = this.mintMetaCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) return cached.meta;
     try {
       const mint = this.resolveMint(mintInput);
       const info = await this.connection.getAccountInfo(mint, 'confirmed');
@@ -422,7 +442,14 @@ export class AnchorVaultClient implements VaultClient {
         const cfg = getScaledUiAmountConfig(parsed);
         if (cfg) multiplier = effectiveMultiplier(cfg, Math.floor(Date.now() / 1000));
       }
-      return { decimals: parsed.decimals, multiplier };
+      const meta = { decimals: parsed.decimals, multiplier };
+      // Decimals are immutable; the 5-minute TTL only bounds how stale a
+      // scheduled ScaledUiAmount multiplier can be. Failures are not cached.
+      this.mintMetaCache.set(cacheKey, {
+        expiresAt: Date.now() + 5 * 60_000,
+        meta,
+      });
+      return meta;
     } catch {
       return null; // unreadable mint: the keeper skips, never guesses
     }

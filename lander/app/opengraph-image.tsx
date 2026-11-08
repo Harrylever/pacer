@@ -19,6 +19,12 @@ export default async function Image() {
   const lockup = await readFile(
     join(process.cwd(), "public/brand/pacer-lockup-dark.svg"),
   );
+  // Fraunces, the display face everywhere else. Satori cannot see
+  // next/font, so the TTFs live beside this file (app/fonts/).
+  const [fraunces, frauncesItalic] = await Promise.all([
+    readFile(join(process.cwd(), "app/fonts/fraunces.ttf")),
+    readFile(join(process.cwd(), "app/fonts/fraunces-italic.ttf")),
+  ]);
   const lockupUri = `data:image/svg+xml;base64,${lockup.toString("base64")}`;
 
   // The track, bleeding off the right edge, with the dot resting on its start line.
@@ -87,7 +93,13 @@ export default async function Image() {
         }}
       >
         <img src={lockupUri} width={210} height={70} alt="" />
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            fontFamily: "Fraunces",
+          }}
+        >
           <div
             style={{
               display: "flex",
@@ -122,6 +134,12 @@ export default async function Image() {
         </div>
       </div>
     </div>,
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        { name: "Fraunces", data: fraunces, style: "normal", weight: 400 },
+        { name: "Fraunces", data: frauncesItalic, style: "italic", weight: 400 },
+      ],
+    },
   );
 }

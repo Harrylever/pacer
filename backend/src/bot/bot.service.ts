@@ -43,6 +43,8 @@ export interface BotReply {
   text: string;
   cardId?: string;
   webApp?: { url: string; label: string };
+  /** Show the Naira / US dollars buttons from bot-messages §1.3. */
+  currencyKeyboard?: boolean;
 }
 
 /**
@@ -100,7 +102,22 @@ export class BotService implements OnModuleInit, OnModuleDestroy {
     const wallet = await this.wallets.createWallet(userId);
     this.keeper?.registerVault(wallet.ownerPublicKey);
     this.awaitingCurrency.add(userId);
-    return { text: `${msg.welcomeWithDeposit(wallet.ownerPublicKey)}\n\n${msg.askCurrency}` };
+    return {
+      text: `${msg.welcomeWithDeposit(wallet.ownerPublicKey)}\n\n${msg.askCurrency}`,
+      currencyKeyboard: true,
+    };
+  }
+
+  /** A tap on the Naira / Dollars button (or a typed answer, same save). */
+  async handleCurrencyChoice(
+    userId: string,
+    currency: 'NGN' | 'USD',
+  ): Promise<BotReply> {
+    this.awaitingCurrency.delete(userId);
+    await this.wallets.setDisplayCurrency(userId, currency);
+    return {
+      text: `${msg.currencySaved(currency === 'NGN' ? 'naira' : 'US dollars')}\n\n${msg.askWithdrawalAddress}`,
+    };
   }
 
   /** Adds a one-line reminder of the pending setup step (the address), if any. */
@@ -158,7 +175,12 @@ export class BotService implements OnModuleInit, OnModuleDestroy {
       } catch (err) {
         reply = { text: err instanceof UserFacingError ? err.message : msg.txFailed(shortReason(err)) };
       }
-      if (reply.webApp) {
+      if (reply.currencyKeyboard) {
+        const kb = new InlineKeyboard()
+          .text(msg.currencyNairaButton, 'currency:NGN')
+          .text(msg.currencyDollarsButton, 'currency:USD');
+        await ctx.reply(reply.text, { reply_markup: kb });
+      } else if (reply.webApp) {
         const kb = new InlineKeyboard().webApp(reply.webApp.label, reply.webApp.url);
         await ctx.reply(reply.text, { reply_markup: kb });
       } else if (reply.cardId) {
@@ -169,6 +191,14 @@ export class BotService implements OnModuleInit, OnModuleDestroy {
       } else {
         await ctx.reply(reply.text);
       }
+    });
+    this.bot.callbackQuery(/^currency:(NGN|USD)$/, async (ctx) => {
+      await ctx.answerCallbackQuery();
+      const reply = await this.handleCurrencyChoice(
+        String(ctx.from?.id ?? ''),
+        ctx.match[1] as 'NGN' | 'USD',
+      );
+      await ctx.reply(reply.text);
     });
     this.bot.callbackQuery(/^confirm:(.+)$/, async (ctx) => {
       await ctx.answerCallbackQuery();
@@ -318,14 +348,9 @@ export class BotService implements OnModuleInit, OnModuleDestroy {
     ) {
       const answer = parseDisplayCurrency(trimmed);
       if (answer.kind === 'unsupported')
-        return { text: msg.currencyUnsupported(answer.name) };
-      if (answer.kind === 'unclear') return { text: msg.currencyUnclear };
-      const currency = answer.currency;
-      this.awaitingCurrency.delete(userId);
-      await this.wallets.setDisplayCurrency(userId, currency);
-      return {
-        text: `${msg.currencySaved(currency === 'NGN' ? 'naira' : 'US dollars')}\n\n${msg.askWithdrawalAddress}`,
-      };
+        return { text: msg.currencyUnsupported(answer.name), currencyKeyboard: true };
+      if (answer.kind === 'unclear') return { text: msg.currencyUnclear, currencyKeyboard: true };
+      return this.handleCurrencyChoice(userId, answer.currency);
     }
     const owner = (await this.wallets.createWallet(userId)).ownerPublicKey;
     const ctx = await this.buildToolContext(userId, owner);

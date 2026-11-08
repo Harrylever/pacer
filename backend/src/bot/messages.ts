@@ -26,6 +26,8 @@ Setup takes about 2 minutes. After setup, I'll message you once a week. That's o
 Stocks can fall. You can lose money.`,
 
   askCurrency: 'First: what currency should I show your money in?',
+  currencyNairaButton: '🇳🇬 Naira (₦)',
+  currencyDollarsButton: '🇺🇸 US dollars ($)',
   currencyUnsupported: (name: string) =>
     `I can't show amounts in ${name} yet. For now it's naira or US dollars. Which would you like?`,
   currencyUnclear:

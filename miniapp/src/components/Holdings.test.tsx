@@ -85,6 +85,19 @@ describe('Holdings', () => {
     expect(screen.getByText('$12.40')).toBeInTheDocument();
   });
 
+  it('waiting to be invested follows the display currency', () => {
+    // 1.5 USDC waiting at ₦1,385/$ = ₦2,078 with $1.50 underneath in NGN.
+    const { rerender } = render(
+      <Holdings summary={mockHoldings} currency="NGN" loading={false} />,
+    );
+    const waiting = screen.getByText(/Waiting to be invested/);
+    expect(waiting.textContent).toContain('₦2,078');
+    expect(waiting.textContent).toContain('$1.50');
+    rerender(<Holdings summary={mockHoldings} currency="USD" loading={false} />);
+    expect(screen.getByText(/Waiting to be invested/).textContent).toContain('$1.50');
+    expect(screen.getByText(/Waiting to be invested/).textContent).not.toContain('USDC');
+  });
+
   it('names each line with its ticker, name, amount and value', () => {
     render(<Holdings summary={mockHoldings} currency="USD" loading={false} />);
     expect(screen.getByText('SPYx')).toBeInTheDocument();

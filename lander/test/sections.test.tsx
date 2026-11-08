@@ -21,12 +21,20 @@ test("faq opens smoothly only where the browser supports it", () => {
   expect(css).toMatch(/details::details-content/);
 });
 
-test("footer: coming-soon items are not links", () => {
+test("footer: coming-soon items are not links, the demo video is", () => {
   const out = html(<Footer />);
   expect(out).not.toMatch(/<a[^>]*>[^<]*Devpost/);
-  expect(out).not.toMatch(/<a[^>]*>[^<]*Demo video/);
   expect(out).toContain("Devpost (coming soon)");
-  expect(out).toContain("Demo video (coming soon)");
+  expect(out).toContain('href="https://youtu.be/RJH9i2106_U"');
+  // Demo video sits in the link list under Telegram bot and GitHub.
+  const order = [
+    out.indexOf("https://t.me/pacerfinancebot"),
+    out.indexOf("https://github.com/Harrylever/pacer"),
+    out.indexOf("https://youtu.be/RJH9i2106_U"),
+  ];
+  expect(order[0]).toBeGreaterThan(-1);
+  expect(order[1]).toBeGreaterThan(order[0]);
+  expect(order[2]).toBeGreaterThan(order[1]);
   expect(out).toContain('href="https://github.com/Harrylever/pacer"');
   expect(out).toContain('href="https://t.me/pacerfinancebot"');
   expect(out).toContain("Not available to US users.");
