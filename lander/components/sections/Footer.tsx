@@ -58,11 +58,6 @@ export function Footer() {
                 {footer.privacyLabel}
               </a>
             </li>
-            {footer.comingSoon.map((label) => (
-              <li key={label} className="py-1 text-dark-muted">
-                <span>{label}</span>
-              </li>
-            ))}
           </ul>
         </div>
         <p className="mt-12 max-w-[72ch] text-[13px] leading-relaxed text-dark-muted">
