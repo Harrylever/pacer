@@ -21,19 +21,14 @@ import { RecentBuys } from './RecentBuys';
 
 /** Space-reserving placeholder: chart block plus three result-row blocks. */
 function ComparisonSkeleton() {
-  const block = (style: React.CSSProperties): React.CSSProperties => ({
-    background: 'var(--divider)',
-    borderRadius: 8,
-    ...style,
-  });
   return (
     <div aria-busy="true" aria-label="Loading the comparison">
-      <div style={block({ height: 230, borderRadius: 16 })} />
+      <div className="skeleton-block skel-chart" />
       {[0, 1, 2].map((i) => (
-        <div key={i} style={{ marginTop: 20, borderTop: '1px solid var(--divider)', paddingTop: 20 }}>
-          <div style={block({ height: 14, width: '40%' })} />
-          <div style={block({ height: 40, width: '65%', marginTop: 8 })} />
-          <div style={block({ height: 12, width: '30%', marginTop: 8 })} />
+        <div key={i} className="skel-row">
+          <div className="skeleton-block skel-w40" />
+          <div className="skeleton-block skel-w65" />
+          <div className="skeleton-block skel-w30" />
         </div>
       ))}
     </div>
@@ -140,7 +135,7 @@ export default function Home() {
         />
       ) : null}
 
-      <footer style={{ marginTop: 32 }}>
+      <footer className="page-footer">
         <p>{copy.demoFooter}</p>
         <p>
           <a

@@ -116,10 +116,10 @@ export function Comparison({
           if (!dragging.current) setIndex(last);
         }}
         onBlur={() => setIndex(last)}
-        style={{ touchAction: 'pan-y', userSelect: 'none', outlineOffset: 4 }}
+        className="chart-slider"
       >
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} style={{ width: '100%', height: 'auto' }} aria-hidden="true" focusable="false">
-          <line x1={PAD} x2={PLOT_WIDTH - PAD} y1={geometry.y(0)} y2={geometry.y(0)} style={{ stroke: 'var(--divider)' }} strokeWidth={1} />
+        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="chart-svg" aria-hidden="true" focusable="false">
+          <line x1={PAD} x2={PLOT_WIDTH - PAD} y1={geometry.y(0)} y2={geometry.y(0)} className="chart-baseline" strokeWidth={1} />
           {SERIES.map((key) => (
             <path key={key} d={geometry.paths[key]} fill="none" className={`chart-line-${key}`} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           ))}
@@ -129,34 +129,34 @@ export function Comparison({
               {SHORT_LABEL[key]}
             </text>
           ))}
-          <line x1={geometry.x(shownIndex)} x2={geometry.x(shownIndex)} y1={PAD} y2={geometry.y(0)} style={{ stroke: 'var(--fg)', strokeOpacity: 0.35 }} strokeWidth={1} />
+          <line x1={geometry.x(shownIndex)} x2={geometry.x(shownIndex)} y1={PAD} y2={geometry.y(0)} className="chart-cursor" strokeWidth={1} />
           {SERIES.map((key) => (
             <circle key={key} cx={geometry.x(shownIndex)} cy={geometry.y(month[key])} r={3.5} className={`chart-fill-${key} chart-dot`} strokeWidth={1.5} />
           ))}
         </svg>
-        <p className="mono tnum" style={{ marginTop: 4, fontSize: 11, color: 'var(--fg-muted)' }}>
+        <p className="mono tnum chart-month">
           {formatMonth(month.month)}
         </p>
       </div>
 
-      <ul style={{ padding: 0, margin: '12px 0' }}>
+      <ul className="result-list">
         {SERIES.map((key) => {
           const result = resultFor(key);
           return (
-            <li key={key} data-testid="asset-row" className="fade-in" style={{ listStyle: 'none', borderTop: '1px solid var(--divider)', padding: '20px 0' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 15, color: 'var(--fg-muted)' }}>
-                <span aria-hidden="true" className={`chart-swatch-${key}`} style={{ display: 'inline-block', width: 20, height: 2, borderRadius: 999 }} />
+            <li key={key} data-testid="asset-row" className="fade-in result-row">
+              <div className="result-label">
+                <span aria-hidden="true" className={`chart-swatch-${key} swatch`} />
                 {ROW_LABEL[key]}
               </div>
-              <div className="tnum" style={{ marginTop: 4, fontFamily: 'var(--font-fraunces), serif', fontSize: 44, fontWeight: 380, lineHeight: 1, letterSpacing: '-0.02em' }}>
+              <div className="tnum result-value">
                 <CountUp value={month[key]} format={formatValue} />
               </div>
-              <p style={{ marginTop: 8, fontSize: 14, color: 'var(--fg-muted)' }}>
+              <p className="result-drop">
                 {copy.worstDropLabel}{' '}
                 {result.maxDrawdownPct === 0 ? (
-                  <span style={{ fontWeight: 500, color: 'var(--fg)' }}>0%</span>
+                  <span className="drop-zero">0%</span>
                 ) : (
-                  <span className="drop-loss" style={{ fontWeight: 500 }}>
+                  <span className="drop-loss drop-value">
                     ▼ −{result.maxDrawdownPct.toFixed(1)}%
                   </span>
                 )}
@@ -165,19 +165,19 @@ export function Comparison({
           );
         })}
         {extraRows.map(({ key, label, result }) => (
-          <li key={key} data-testid="asset-row" className="fade-in" style={{ listStyle: 'none', borderTop: '1px solid var(--divider)', padding: '20px 0' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 15, color: 'var(--fg-muted)' }}>
+          <li key={key} data-testid="asset-row" className="fade-in result-row">
+            <div className="result-label">
               {label}
             </div>
-            <div className="tnum" style={{ marginTop: 4, fontFamily: 'var(--font-fraunces), serif', fontSize: 44, fontWeight: 380, lineHeight: 1, letterSpacing: '-0.02em' }}>
+            <div className="tnum result-value">
               <CountUp value={result.endNgn} format={formatValue} />
             </div>
-            <p style={{ marginTop: 8, fontSize: 14, color: 'var(--fg-muted)' }}>
+            <p className="result-drop">
               {copy.worstDropLabel}{' '}
               {result.maxDrawdownPct === 0 ? (
-                <span style={{ fontWeight: 500, color: 'var(--fg)' }}>0%</span>
+                <span className="drop-zero">0%</span>
               ) : (
-                <span className="drop-loss" style={{ fontWeight: 500 }}>
+                <span className="drop-loss drop-value">
                   ▼ −{result.maxDrawdownPct.toFixed(1)}%
                 </span>
               )}
@@ -187,11 +187,11 @@ export function Comparison({
       </ul>
 
       <p>{data.disclaimer}</p>
-      <p style={{ color: 'var(--fg-muted)', fontSize: 13 }}>
+      <p className="muted-sm">
         {copy.sourceLine(formatMonth(months[0].month), formatMonth(data.asOf ?? months[last].month))}
         {ngnPerUsd ? <> · {copy.marketRateCaption(ngnPerUsd)}</> : null}
       </p>
-      <p style={{ color: 'var(--fg-muted)' }}>{copy.honestHook}</p>
+      <p className="muted">{copy.honestHook}</p>
 
       {/* The wrapper is what's visually hidden: a table ignores the 1px width
           of .sr-only and would widen the page (it pushed 360px phones to 470px). */}
