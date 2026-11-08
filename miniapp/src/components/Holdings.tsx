@@ -107,7 +107,8 @@ export function Holdings({
         )}
       </p>
       <p>
-        {copy.waiting}: <span>{summary.waitingUsdc} USDC</span>
+        {copy.waiting}: <span>{money(summary.waitingUsdc).primary}</span>
+        {currency === 'NGN' ? ` (${money(summary.waitingUsdc).sub})` : ''}
       </p>
 
       <div
