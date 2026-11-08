@@ -192,6 +192,52 @@ describe('KeeperService buy records (DB)', () => {
   });
 });
 
+describe('KeeperService SlippageTooHigh retry', () => {
+  it('retries once with a fresh price and buys', async () => {
+    const client = await seeded(500_000n);
+    const realBuy = client.buyAsKeeper.bind(client);
+    let attempts = 0;
+    client.buyAsKeeper = async (args) => {
+      attempts += 1;
+      if (attempts === 1) throw new VaultProgramError('SlippageTooHigh');
+      return realBuy(args);
+    };
+    const keeper = new KeeperService(client, cfg);
+    keeper.registerVault('OWNER');
+    const r = await keeper.tick();
+    expect(attempts).toBeGreaterThan(1);
+    expect(r.buys.length).toBeGreaterThan(0);
+  });
+
+  it('retries at most once: a second SlippageTooHigh buys nothing', async () => {
+    const client = await seeded(500_000n);
+    let attempts = 0;
+    client.buyAsKeeper = async () => {
+      attempts += 1;
+      throw new VaultProgramError('SlippageTooHigh');
+    };
+    const keeper = new KeeperService(client, cfg);
+    keeper.registerVault('OWNER');
+    const r = await keeper.tick();
+    expect(r.buys).toHaveLength(0);
+    // First leg: one attempt plus one retry, then the tick stops.
+    expect(attempts).toBe(2);
+  });
+
+  it('does not retry other program errors', async () => {
+    const client = await seeded(500_000n);
+    let attempts = 0;
+    client.buyAsKeeper = async () => {
+      attempts += 1;
+      throw new VaultProgramError('StalePrice');
+    };
+    const keeper = new KeeperService(client, cfg);
+    keeper.registerVault('OWNER');
+    await keeper.tick();
+    expect(attempts).toBe(1); // first leg throws, no retry
+  });
+});
+
 describe('KeeperService program-error handling', () => {
   it('treats expected rejections as a quiet skip and never throws', async () => {
     const client = await seeded(500_000n);

@@ -17,6 +17,12 @@ import { explorerTx, msg } from '../bot/messages';
 import type { PrismaService } from '../prisma/prisma.service';
 import { formatMoney, toUiAmount } from '../common/money';
 
+/** Slippage rejection from either client: typed VaultProgramError or the fake's plain Error. */
+export function isSlippageTooHigh(err: unknown): boolean {
+  if (err instanceof VaultProgramError) return err.errorName === 'SlippageTooHigh';
+  return err instanceof Error && /SlippageTooHigh/.test(err.message);
+}
+
 export interface KeeperBuy {
   owner: string;
   mint: string;
@@ -154,7 +160,7 @@ export class KeeperService {
         this.logger.warn(`keeper: no mint metadata for ${mint}; skipping (never assume decimals)`);
         continue;
       }
-      const minOut = slippageFloor({
+      let minOut = slippageFloor({
         usdcIn,
         priceMicroUsdc: price.priceMicroUsdc,
         stockDecimals: meta.decimals,
@@ -164,7 +170,29 @@ export class KeeperService {
       const before = await this.client
         .getVaultBalance(owner, mint)
         .catch(() => null);
-      const signature = await this.client.buyAsKeeper({ owner, mint, usdcIn, minOut });
+      let signature: string;
+      try {
+        signature = await this.client.buyAsKeeper({ owner, mint, usdcIn, minOut });
+      } catch (err) {
+        if (!isSlippageTooHigh(err)) throw err;
+        // One retry only, with a freshly read price: the quote that just
+        // failed may have moved between our read and the program's check.
+        const fresh = await this.client.getPrice(mint);
+        if (!fresh || now - fresh.updatedAt > this.config.maxPriceAgeSecs)
+          throw err;
+        const freshMinOut = slippageFloor({
+          usdcIn,
+          priceMicroUsdc: fresh.priceMicroUsdc,
+          stockDecimals: meta.decimals,
+          maxSlippageBps: this.config.maxSlippageBps,
+        });
+        if (freshMinOut === 0n) throw err;
+        minOut = freshMinOut;
+        this.logger.log(
+          `keeper: SlippageTooHigh for ${mint}; retrying once with a fresh price`,
+        );
+        signature = await this.client.buyAsKeeper({ owner, mint, usdcIn, minOut });
+      }
       const after = await this.client
         .getVaultBalance(owner, mint)
         .catch(() => null);
