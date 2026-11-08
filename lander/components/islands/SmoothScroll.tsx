@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { prefersReducedMotion } from "@/lib/motion-pref";
 import { LENIS_OPTIONS, setLenis } from "@/lib/smooth-scroll";
 
@@ -12,11 +12,19 @@ import { LENIS_OPTIONS, setLenis } from "@/lib/smooth-scroll";
 export function SmoothScroll() {
   useEffect(() => {
     if (prefersReducedMotion()) return;
-    const lenis = new Lenis(LENIS_OPTIONS);
-    setLenis(lenis);
+    let lenis: Lenis | null = null;
+    let cancelled = false;
+    // Loaded on demand: smooth scrolling is an enhancement, so Lenis stays
+    // out of the first-load bundle and arrives as its own chunk.
+    void import("lenis").then(({ default: LenisCtor }) => {
+      if (cancelled) return;
+      lenis = new LenisCtor(LENIS_OPTIONS);
+      setLenis(lenis);
+    });
     return () => {
+      cancelled = true;
       setLenis(null);
-      lenis.destroy();
+      lenis?.destroy();
     };
   }, []);
   return null;

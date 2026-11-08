@@ -30,3 +30,18 @@ test("CSS smooth scrolling steps aside while Lenis runs", () => {
 test("the island renders nothing", () => {
   expect(html(<SmoothScroll />)).toBe("");
 });
+
+test("lenis is loaded on demand, out of the first-load bundle", () => {
+  const src = readFileSync("components/islands/SmoothScroll.tsx", "utf8");
+  expect(src).toContain('import("lenis")');
+  expect(src).not.toMatch(/^import Lenis from/m);
+});
+
+test("the hero entrance is CSS, with no motion library", () => {
+  const src = readFileSync("components/islands/HeroSequence.tsx", "utf8");
+  expect(src).not.toContain("motion/react");
+  expect(src).not.toMatch(/from\s+"motion/);
+  const css = readFileSync("app/globals.css", "utf8");
+  expect(css).toContain(".hero-rise");
+  expect(css).toMatch(/@keyframes hero-rise/);
+});
