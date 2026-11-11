@@ -36,7 +36,7 @@ test("footer: the demo video is a link and there is no Devpost item", () => {
   expect(order[2]).toBeGreaterThan(order[1]);
   expect(out).toContain('href="https://github.com/Harrylever/pacer"');
   expect(out).toContain('href="https://t.me/pacerfinancebot"');
-  expect(out).toContain("Not available to US users.");
+  expect(out).toContain("offered to US persons");
   expect(out).toContain("MLH Solana Hackathon");
 });
 

@@ -122,7 +122,7 @@ Or just tell me, for example: "₦500 a day into Apple" or "is investing worth i
 
   about: `Pacer helps you put small daily amounts of USDC into tokenized US stocks on Solana. Your money sits in a vault that only buys the stocks you choose, at the pace you set, and it can only be withdrawn to your own wallet.
 
-Pacer is software, not a financial adviser. It doesn't recommend investments or promise returns. The stocks are tokenized versions of US shares (xStocks) issued by Backed Finance, which keeps powers such as freezing tokens. The value of stocks can go down as well as up, and you can lose money. Past performance is not a guide to future results. Naira values use the parallel-market rate and are approximate. Pacer isn't available to people in the US.
+Pacer is software, not a financial adviser. It doesn't recommend investments or promise returns. The stocks are tokenized versions of US shares (xStocks) issued by Backed Finance, which keeps powers such as freezing tokens. The value of stocks can go down as well as up, and you can lose money. Past performance is not a guide to future results. Naira values use the parallel-market rate and are approximate. Tokenized stocks aren't offered to US persons, so Pacer isn't either.
 
 This is a test version on Solana devnet. Stock tokens are stand-ins priced from real xStocks, and no real money is involved.`,
 

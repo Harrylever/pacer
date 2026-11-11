@@ -30,7 +30,7 @@ export const copy = {
       "Put the USDC you already hold into US stocks like Apple and the S&P 500, a little at a time. A Solana program holds your money and keeps the pace you choose. We can't rush it, and we can't take it.",
     primaryCta: "Start on Telegram",
     secondaryCta: "See how it works",
-    note: "Opens in Telegram. No app to install. Not available to US users.",
+    note: "Opens in Telegram. No app to install. Test-money demo: tokenized stocks aren't offered to US persons, so Pacer isn't either.",
   },
 
   chat: [
@@ -184,7 +184,7 @@ export const copy = {
     },
     {
       q: "Who can use Pacer?",
-      a: "Anyone outside the US who holds USDC on Solana. Pacer started in Nigeria. It isn't available to US users.",
+      a: "Anyone outside the US who holds USDC on Solana. Pacer started in Nigeria. Tokenized stocks (xStocks) aren't offered to US persons, so we don't offer Pacer there. This demo is open for review and uses test money.",
     },
     {
       q: "How much do I need to start?",
@@ -214,6 +214,6 @@ export const copy = {
     githubLabel: "GitHub",
     demoLabel: "Demo video",
     smallPrint:
-      "Built for the MLH Solana Hackathon, November 2026. The demo runs on Solana devnet. Not available to US users. Figures shown are past performance, not a prediction or a promise.",
+      "Built for the MLH Solana Hackathon, November 2026. The demo runs on Solana devnet with test money. Tokenized stocks aren't offered to US persons, so Pacer isn't either. Figures shown are past performance, not a prediction or a promise.",
   },
 }

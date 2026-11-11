@@ -17,7 +17,7 @@ test("hero content and CTAs are in the server HTML", () => {
   expect(out).toContain("We can&#x27;t rush it, and we can&#x27;t take it.");
   expect(out).toContain('href="https://t.me/pacerfinancebot"');
   expect(out).toContain('href="#how"');
-  expect(out).toContain("Not available to US users.");
+  expect(out).toContain("offered to US persons");
   for (const line of [
     "Your $10 don land.",
     "Next buy tomorrow.",
