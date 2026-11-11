@@ -4,7 +4,7 @@
 
 Built first for young Nigerians whose naira savings kept losing value. It works for anyone holding USDC outside the US.
 
-> **This is a hackathon demo on Solana devnet.** It uses test money and stand-in stock tokens priced from real market quotes. No real money is involved. Not available to US users. Nothing here is financial advice or a promise of returns. See [What is real, and what isn't](#what-is-real-and-what-isnt).
+> **This is a hackathon demo on Solana devnet.** It uses test money and stand-in stock tokens priced from real market quotes. No real money is involved. Tokenized stocks aren't offered to US persons, so Pacer isn't either, but the demo is open for review. Nothing here is financial advice or a promise of returns. See [What is real, and what isn't](#what-is-real-and-what-isnt).
 
 Built for the MLH Solana Hackathon, November 2026 (AI track).
 
@@ -167,7 +167,7 @@ Said plainly, because the guarantees only mean something if the limits are clear
 - **The issuer keeps its powers.** Real xStocks are issued by Backed Finance, whose tokens have a permanent delegate, a freeze authority and a pause. So the promise is "neither we nor the agent can take your money", not "nobody can".
 - **Deposits are briefly custodial.** USDC arrives at a deposit wallet whose (encrypted) key the server holds, and is moved into the vault within seconds. The vault owner key is also server-held in this demo.
 - **Withdrawals arrive in kind.** Your USDC arrives as USDC and your stocks as stock tokens. Selling them is a swap in your own wallet; the vault can't sell for you yet. Selling inside the vault would need a new owner-only `sell` instruction.
-- **Eligibility is unconfirmed.** xStocks are not for US users, and eligibility in Nigeria hasn't been confirmed.
+- **Eligibility is unconfirmed.** xStocks aren't offered to US persons, and eligibility in Nigeria hasn't been confirmed. This demo uses test money and doesn't block by region. A production launch would enforce eligibility before any real money moves.
 - **No advice, no forecasts.** The agent explains options and shows past performance. It never recommends a trade or promises a return. The naira figures use the parallel-market rate from news reports, which is approximate.
 
 The full list of risks and judge questions is in [`SPEC.md`](SPEC.md).

@@ -37,7 +37,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "This demo",
     body: [
-      "Pacer is a hackathon demo on Solana devnet using test money with no real value. It is not available to people in the US, and nothing here is financial advice.",
+      "Pacer is a hackathon demo on Solana devnet using test money with no real value. Tokenized stocks aren't offered to US persons, so Pacer isn't either, and nothing here is financial advice.",
     ],
   },
   {
